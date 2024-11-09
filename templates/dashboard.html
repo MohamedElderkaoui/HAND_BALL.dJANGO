@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Predicción de Rendimiento</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-4">Bienvenido al Dashboard de Predicción</h1>
+        
+        <!-- Formulario de Entrada para el Usuario -->
+        <form method="POST" action="{% url 'predict_performance' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="goals" class="form-label">Goles</label>
+                <input type="number" class="form-control" id="goals" name="goals" required>
+            </div>
+            <div class="mb-3">
+                <label for="assists" class="form-label">Asistencias</label>
+                <input type="number" class="form-control" id="assists" name="assists" required>
+            </div>
+            <div class="mb-3">
+                <label for="blocks" class="form-label">Bloqueos</label>
+                <input type="number" class="form-control" id="blocks" name="blocks" required>
+            </div>
+            <div class="mb-3">
+                <label for="saves" class="form-label">Saves</label>
+                <input type="number" class="form-control" id="saves" name="saves" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Realizar Predicción</button>
+        </form>
+
+        <hr>
+
+        <!-- Si hay una predicción, la mostramos aquí -->
+        {% if predictions is not none %}
+            <h3>Resultado de la Predicción:</h3>
+            <p>
+                La predicción para el jugador con los datos proporcionados es: 
+                {% if predictions == 1 %}
+                    Buen rendimiento
+                {% else %}
+                    Mal rendimiento
+                {% endif %}
+            </p>
+        {% endif %}
+
+        <a href="/" class="btn btn-secondary mt-3">Volver a la página principal</a>
+    </div>
+
+    <!-- Bootstrap JS (Opcional para funcionalidades adicionales) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
